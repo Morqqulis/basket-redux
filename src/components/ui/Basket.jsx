@@ -1,7 +1,7 @@
-import { Button, Menu, MenuButton, MenuList } from "@chakra-ui/react";
-import { ShoppingCart, Trash2 } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
-import { removeFromBasket } from "../../stores/slices/basketSlice";
+import { Button, Menu, MenuButton, MenuList } from "@chakra-ui/react"
+import { ShoppingCart, Trash2 } from "lucide-react"
+import { useDispatch, useSelector } from "react-redux"
+import { removeFromBasket } from "../../stores/slices/basketSlice"
 const Basket = () => {
   const basketItems = useSelector((state) => state.basket.items);
   const dispatch = useDispatch();
@@ -25,11 +25,15 @@ const Basket = () => {
               key={i}
             >
               {item.title.length > 20 ? item.title.slice(0, 20) : item.title}
+              <div>
+                Count: <span className={`font-bold`}>{item.count}</span>
+              </div>
               <img
                 className={`max-w-[20px]`}
                 src={item.image}
                 alt={item.title + " image"}
               />
+
               <Trash2
                 onClick={() => dispatch(removeFromBasket(item.id))}
                 className={`-order-2 duration-300 hover:cursor-pointer hover:text-red-500`}
