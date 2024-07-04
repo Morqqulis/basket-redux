@@ -1,14 +1,17 @@
-import { Button, Menu, MenuButton, MenuList } from "@chakra-ui/react"
-import { Heart, Trash2 } from "lucide-react"
-import { useDispatch, useSelector } from "react-redux"
-import { removeFromLikedItems } from "../../stores/slices/likedItemsSlice"
+import { Button, Menu, MenuButton, MenuList } from "@chakra-ui/react";
+import { Heart, Trash2 } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromLikedItems } from "../../stores/slices/likedItemsSlice";
 const LikedItems = () => {
   const likedItems = useSelector((state) => state.likedItems.items);
   const dispatch = useDispatch();
 
   return (
     <Menu>
-      <MenuButton className={`relative`} as={Button}>
+      <MenuButton
+        className={`relative ${likedItems.length > 0 ? "!bg-green-300" : ""}`}
+        as={Button}
+      >
         <Heart />
         <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-bold text-red-500">
           {likedItems.length}

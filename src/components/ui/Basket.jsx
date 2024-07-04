@@ -1,14 +1,18 @@
-import { Button, Menu, MenuButton, MenuList } from "@chakra-ui/react"
-import { ShoppingCart, Trash2 } from "lucide-react"
-import { useDispatch, useSelector } from "react-redux"
-import { removeFromBasket } from "../../stores/slices/basketSlice"
+import { Button, Menu, MenuButton, MenuList } from "@chakra-ui/react";
+import { ShoppingCart, Trash2 } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromBasket } from "../../stores/slices/basketSlice";
+import { toast } from "react-toastify";
 const Basket = () => {
   const basketItems = useSelector((state) => state.basket.items);
   const dispatch = useDispatch();
 
   return (
     <Menu>
-      <MenuButton className={`relative`} as={Button}>
+      <MenuButton
+        className={`relative ${basketItems.length > 0 ? "!bg-green-300" : ""}`}
+        as={Button}
+      >
         <ShoppingCart />
         <span className="absolute left-1/2 top-0 -translate-x-1/2 text-xs font-bold text-red-500">
           {basketItems.length}
@@ -35,7 +39,10 @@ const Basket = () => {
               />
 
               <Trash2
-                onClick={() => dispatch(removeFromBasket(item.id))}
+                onClick={() => {
+                  dispatch(removeFromBasket(item.id));
+                  toast("Item removed from basket");
+                }}
                 className={`-order-2 duration-300 hover:cursor-pointer hover:text-red-500`}
               />
             </div>
@@ -44,8 +51,11 @@ const Basket = () => {
         <span
           className={`text- mt-2.5 flex items-end justify-end p-2 text-right font-bold`}
         >
-          Total price:{" "}
-          {basketItems.reduce((acc, item) => acc + item.price * item.count, 0)}
+          Total price:{' '}
+          {basketItems.reduce(
+            (acc, item) => acc + Math.round(item.price * item.count),
+            0,
+          )}$
         </span>
       </MenuList>
     </Menu>

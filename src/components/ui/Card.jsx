@@ -1,8 +1,9 @@
-import { Heart } from "lucide-react"
-import { useDispatch, useSelector } from "react-redux"
-import { addToBasket } from "../../stores/slices/basketSlice"
-import { addToLikedItems } from "../../stores/slices/likedItemsSlice"
-import { decreaseCount, increaseCount } from "../../stores/slices/productSlice"
+import { Heart } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { addToBasket } from "../../stores/slices/basketSlice";
+import { addToLikedItems } from "../../stores/slices/likedItemsSlice";
+import { decreaseCount, increaseCount } from "../../stores/slices/productSlice";
 
 const Card = ({ id, title, price, count, image }) => {
   const dispatch = useDispatch();
@@ -30,9 +31,10 @@ const Card = ({ id, title, price, count, image }) => {
       </p>
       <button
         className={`absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 scale-0 items-center justify-center rounded-full bg-gray-400 duration-300 group-hover/product:scale-100`}
-        onClick={() =>
-          dispatch(addToLikedItems({ id, title, price, count, image }))
-        }
+        onClick={() => {
+          dispatch(addToLikedItems({ id, title, price, count, image }));
+          toast("Item added to liked items");
+        }}
       >
         <Heart className={`${isLiked ? "fill-red-500" : ""} `} size={50} />
       </button>
@@ -41,7 +43,11 @@ const Card = ({ id, title, price, count, image }) => {
         <button
           className={`h-10 w-10 rounded-md bg-green-700 text-lg leading-10 text-white duration-300 hover:scale-110`}
           type={"button"}
-          onClick={() => dispatch(decreaseCount({ id }))}
+          onClick={() => {
+            if (count > 1) {
+              dispatch(decreaseCount({ id }));
+            }
+          }}
         >
           -
         </button>
@@ -59,9 +65,10 @@ const Card = ({ id, title, price, count, image }) => {
       <button
         className={`mx-auto mt-5 block w-full rounded-md bg-red-400 py-2.5 duration-300 hover:scale-105`}
         type={"button"}
-        onClick={() =>
-          dispatch(addToBasket({ id, title, price, count, image }))
-        }
+        onClick={() => {
+          dispatch(addToBasket({ id, title, price, count, image }));
+          toast("Item added to basket");
+        }}
       >
         Add to cart
       </button>
