@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  #root {
+    @apply h-full;
+  }
+  body {
+    @apply h-full bg-gray-100 overflow-x-hidden;
+  }
+  main {
+    @apply flex-[1_1_auto];
+    > * {
+      @apply transition-all duration-300;
+    }
+  }
+}
+
+@layer components {
+  .container {
+    @apply mx-auto max-w-[1240px] px-5;
+  }
+  .wrapper {
+    @apply flex min-h-full flex-col;
+    > * {
+      @apply transition-all duration-300;
+    }
+  }
+}
